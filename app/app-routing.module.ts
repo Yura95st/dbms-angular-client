@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import {
+    LocationStrategy,
+    HashLocationStrategy,
+} from '@angular/common';
 
 @NgModule({
     imports: [
@@ -13,6 +17,9 @@ import { RouterModule } from '@angular/router';
     ],
     exports: [
         RouterModule
+    ],
+    providers: [
+        { provide: LocationStrategy, useClass: HashLocationStrategy }
     ]
 })
 export class AppRoutingModule { }
