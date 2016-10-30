@@ -6,17 +6,20 @@ import { Database } from '../shared/database.model';
 @Component({
     selector: 'database',
     template: `
-    <h2>{{database.Name}}</h2>
+    <div ng-if="errorMsg">{{errorMsg}}</div>
+
+    <h2>{{database?.Name}}</h2>
 
     <ul>
-      <li *ngFor="let tableName of database.TableNames">
-        <a [routerLink]="['/databases', database.Name, tableName]">{{tableName}}</a>
+      <li *ngFor="let tableName of database?.TableNames">
+        <a [routerLink]="['/databases', database?.Name, tableName]">{{tableName}}</a>
       </li>
     </ul>
   `
 })
 export class DatabaseComponent implements OnInit {
 
+    private errorMsg: string;    
     private database: Database;
 
     constructor(private dbService: DatabaseService, private route: ActivatedRoute) {
@@ -26,6 +29,19 @@ export class DatabaseComponent implements OnInit {
     ngOnInit() {
         let routeParams = this.route.snapshot.params;
 
-        this.database = this.dbService.getDatabase(routeParams["dbName"]);
+        this.loadDatabase(routeParams["dbName"]);
+    }
+
+    private loadDatabase(dbName: string) {
+        this.dbService.getDatabase(dbName).subscribe(
+            data => { this.database = data },
+            error => this.handleError(error),
+            () => console.log('Database loaded.')
+        );
+    }
+
+    private handleError(error: any) {
+        this.errorMsg = error;
+        console.error(error)
     }
 }

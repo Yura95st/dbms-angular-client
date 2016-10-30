@@ -1,31 +1,49 @@
+import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/Rx';
+
 import { Database } from './database.model';
 import { Table } from './table.model';
-import { Attribute } from './attribute.model';
 
+@Injectable()
 export class DatabaseService {
+    private static baseUrl: string = 'http://dbmsapp.azurewebsites.net/api';
+    // private static baseUrl: string = 'http://localhost:62227/api';
 
-    private databases: Database[]
+    private headers: Headers;
 
-    constructor() {
-        this.databases = [
-            { Name: "dbOne", TableNames: ["dbOne.tableOne", "dbOne.tableTwo"] },
-            { Name: "dbTwo", TableNames: ["dbTwo.tableOne", "dbTwo.tableTwo"] },
-        ];
+    constructor(private http: Http) {
+        this.headers = new Headers();
+        this.headers.append("Accept", "application/json");
     }
 
-    getDbNames(): string[] {
-        return this.databases.map(d => d.Name);
+    getDbNames(): Observable<string[]> {
+        return this.http.get(`${DatabaseService.baseUrl}/databases`, { headers: this.headers })
+            .map(response => response.json());
     }
 
-    getDatabase(dbName: string): Database {
-        return this.databases.find(d => d.Name == dbName);
+    getDatabase(dbName: string): Observable<Database> {
+        return this.http.get(`${DatabaseService.baseUrl}/databases/${dbName}`, { headers: this.headers })
+            .map(response => response.json());
     }
 
-    getTable(dbName: string, tableName: string): Table {
-        return {Name: tableName, Attributes: [], Rows: []};
+    getTable(dbName: string, tableName: string): Observable<Table> {
+        return this.http.get(`${DatabaseService.baseUrl}/databases/${dbName}/${tableName}`, { headers: this.headers })
+            .map(response => response.json());
     }
 
-    getTableProjection(dbName: string, tableName: string, attributes: Attribute[]): Table {
-        return undefined;
+    getTableProjection(dbName: string, tableName: string, attributesNames: string[]): Observable<Table> {
+        let queryUrl: string = `${DatabaseService.baseUrl}/databases/${dbName}/${tableName}/projection`;
+
+        let isFirst: boolean = true;
+        for (let attributesName of attributesNames) {
+            queryUrl += `${isFirst ? "?" : "&"}attributesNames=${attributesName}`;
+            isFirst = false;
+        }
+
+        return this.http.get(queryUrl, { headers: this.headers })
+            .map(response => response.json());
     }
 }

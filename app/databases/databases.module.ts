@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule }   from '@angular/common';
+import { HttpModule } from '@angular/http';
 
 import { DatabasesRoutingModule } from './databases-routing.module';
 
@@ -12,7 +13,8 @@ import { DatabaseService } from './shared/database.service';
 @NgModule({
   imports: [
     CommonModule,
-    DatabasesRoutingModule
+    HttpModule,
+    DatabasesRoutingModule,
   ],
   declarations: [
     DatabaseListComponent,
