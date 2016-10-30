@@ -3,9 +3,17 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'my-app',
     template: `
-        <h1>My First Angular App.</h1>
+        <div class="navbar navbar-inverse">
+            <div class="container">
+                <div class="navbar-header">
+                    <a [routerLink]="['/']" class="navbar-brand">DBMS Angular Client</a>
+                </div>
+            </div>
+        </div>
 
-        <router-outlet></router-outlet>
+        <div class="container body-content">
+            <router-outlet></router-outlet>
+        </div>
     `
 })
 export class AppComponent { }

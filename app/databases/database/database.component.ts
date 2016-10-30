@@ -6,15 +6,20 @@ import { Database } from '../shared/database.model';
 @Component({
     selector: 'database',
     template: `
-    <div ng-if="errorMsg">{{errorMsg}}</div>
-
     <h2>{{database?.Name}}</h2>
+    
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Type the name of table">
+        <span class="input-group-btn">
+            <button class="btn btn-success" type="button">Create</button>
+        </span>
+    </div>
+    
+    <div *ngIf="errorMsg" class="alert alert-danger" role="alert">{{errorMsg}}</div>
 
-    <ul>
-      <li *ngFor="let tableName of database?.TableNames">
-        <a [routerLink]="['/databases', database?.Name, tableName]">{{tableName}}</a>
-      </li>
-    </ul>
+    <div class="list-group" style="margin: 10px 0 0">
+        <a *ngFor="let tableName of database?.TableNames" class="list-group-item" [routerLink]="['/databases', database?.Name, tableName]">{{tableName}}</a>
+    </div>
   `
 })
 export class DatabaseComponent implements OnInit {

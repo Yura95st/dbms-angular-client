@@ -6,13 +6,18 @@ import { DatabaseService } from '../shared/database.service';
     template: `
     <h2>Databases</h2>
     
-    <div ng-if="errorMsg">{{errorMsg}}</div>
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Type the name of table">
+        <span class="input-group-btn">
+            <button class="btn btn-success" type="button">Create</button>
+        </span>
+    </div>
+    
+    <div *ngIf="errorMsg" class="alert alert-danger" role="alert">{{errorMsg}}</div>
 
-    <ul>
-      <li *ngFor="let dbName of dbNames">
-        <a [routerLink]="['/databases',  dbName]">{{dbName}}</a>
-      </li>
-    </ul>
+    <div class="list-group" style="margin: 10px 0 0">
+        <a *ngFor="let dbName of dbNames" class="list-group-item" [routerLink]="['/databases',  dbName]">{{dbName}}</a>
+    </div>
   `
 })
 export class DatabaseListComponent implements OnInit {
