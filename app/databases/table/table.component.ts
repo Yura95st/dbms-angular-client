@@ -5,30 +5,7 @@ import { Table } from '../shared/table.model';
 
 @Component({
     selector: 'my-table',
-    template: `
-    <h2>{{table?.Name}}</h2>
-
-    <select multiple (change)="onSelectChange($event.target.options)">
-        <option *ngFor="let attribute of table?.Attributes" [value]="attribute.Name">
-            {{attribute.Name}}
-        </option>
-    </select>
-    
-    <div *ngIf="errorMsg" class="alert alert-danger" role="alert">{{errorMsg}}</div>
-    
-    <table class="table table-bordered table-striped table-responsive">
-        <thead>
-        <tr>
-            <th *ngFor="let attribute of resultTable?.Attributes">{{attribute.Name}}</th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let row of resultTable?.Rows">
-                <td *ngFor="let rowValue of row.Value">{{rowValue}}</td>
-            </tr>
-        </tbody>
-    </table>
-  `
+    templateUrl: "app/databases/table/table.component.html"
 })
 export class TableComponent implements OnInit {
 
