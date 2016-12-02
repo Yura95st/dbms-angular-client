@@ -4,8 +4,9 @@ import { DatabaseService } from '../shared/database.service';
 import { Database } from '../shared/database.model';
 
 @Component({
+    moduleId: module.id,
     selector: "database",
-    templateUrl: "app/databases/database/database.component.html"
+    templateUrl: "database.component.html"
 })
 export class DatabaseComponent implements OnInit {
 

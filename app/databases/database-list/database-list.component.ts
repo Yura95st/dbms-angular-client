@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from '../shared/database.service';
 
 @Component({
+    moduleId: module.id,
     selector: 'database-list',
-    templateUrl: "app/databases/database-list/database-list.component.html"
+    templateUrl: "database-list.component.html"
 })
 export class DatabaseListComponent implements OnInit {
 

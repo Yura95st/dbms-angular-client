@@ -4,8 +4,9 @@ import { DatabaseService } from '../shared/database.service';
 import { Table } from '../shared/table.model';
 
 @Component({
+    moduleId: module.id,
     selector: 'my-table',
-    templateUrl: "app/databases/table/table.component.html"
+    templateUrl: "table.component.html"
 })
 export class TableComponent implements OnInit {
 
@@ -31,7 +32,7 @@ export class TableComponent implements OnInit {
 
     private loadTable(tableName: string) {
         this.dbService.getTable(this.dbName, tableName).subscribe(
-            data => { 
+            data => {
                 this.table = data;
                 this.resultTable = data;
             },
@@ -42,28 +43,25 @@ export class TableComponent implements OnInit {
 
     private loadTableProjection(attributesNames: string[]) {
         this.dbService.getTableProjection(this.dbName, this.table.Name, attributesNames).subscribe(
-            data => { 
-                this.resultTable = data 
+            data => {
+                this.resultTable = data
             },
             error => this.handleError(error),
             () => console.log('Table projection loaded.')
         );
-    }    
+    }
 
     private onSelectChange(options: HTMLOptionsCollection) {
         let attributesNames: string[] = [];
 
-        for (let i = 0; i < options.length; i++)
-        {
+        for (let i = 0; i < options.length; i++) {
             let option = options[i];
-            if (option.selected)
-            {
+            if (option.selected) {
                 attributesNames.push(option.value);
             }
         }
 
-        if (attributesNames.length == 0)
-        {
+        if (attributesNames.length == 0) {
             attributesNames = this.table.Attributes.map(item => item.Name);
         }
 

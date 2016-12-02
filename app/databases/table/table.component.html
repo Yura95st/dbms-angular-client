@@ -1,6 +1,6 @@
 <h2>{{table?.Name}}</h2>
 
-<select multiple (change)="onSelectChange($event.target.options)">
+<select #selectBox multiple (change)="onSelectChange(selectBox.options)">
     <option *ngFor="let attribute of table?.Attributes" [value]="attribute.Name">{{attribute.Name}}</option>
 </select>
 
