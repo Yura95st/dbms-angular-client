@@ -55,7 +55,7 @@ export class TableComponent implements OnInit {
         let attributesNames: string[] = [];
 
         for (let i = 0; i < options.length; i++) {
-            let option = options[i];
+            let option = options[i] as HTMLOptionElement;
             if (option.selected) {
                 attributesNames.push(option.value);
             }
